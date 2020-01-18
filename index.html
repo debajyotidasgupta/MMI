@@ -11,10 +11,25 @@
 	
 	</head>
 	<body>
+        <div>
+            <nav>
+                <h1>Get Help</h1>
+                <button onclick="getSos()" style="background-color: red;">SOS</button>
+            </nav>
+        </div>
             <div id="map"></div>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
-    
+    function getSos() {
+                var all = $.get("https://3738dbe5.ngrok.io/all", function(data){
+                    var keys = Object.keys(data);
+                    $.post("https://3738dbe5.ngrok.io/sos", {
+                        id: keys[0]
+                    }, function(data){
+                        console.log(data)
+                    })
+    })
+    }
     var route_api_url = 'http://apis.mapmyindia.com/advancedmaps/v1/oedun1iqj38thp51vt5t6qkegh7ddvfd/route?';
     
     var randomString = function (len, bits)
