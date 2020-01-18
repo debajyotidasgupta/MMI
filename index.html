@@ -80,6 +80,7 @@
         function sosPath(){
             $.get('https://3738dbe5.ngrok.io/sendNotification', (data, status) => {
                 for (let ii = 0; ii < data.sos.length; ii++){
+                    console.log(data);
                     drawPath(data.sos[ii]);
                 }
                 
@@ -87,7 +88,7 @@
         }
 
         function drawPath(point){
-            $.get(`https://3738dbe5.ngrok.io/getRoute?a=${curr_lat}&b=${curr_lng}&c=${point[0]}&d=${point[1]}`, (data, status) => {
+            $.get(`https://3738dbe5.ngrok.io/getRoute?a=${curr_lng}&b=${curr_lat}&c=${point[1]}&d=${point[0]}`, (data, status) => {
                 let pArr = [];
                 pArr.push(new L.LatLng(curr_lat, curr_lng));
                 console.log(data.waypoints[0].location);
