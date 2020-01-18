@@ -1,0 +1,34 @@
+import time
+
+from flask import Flask, request, jsonify
+from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
+
+app = Flask(__name__)
+cors = CORS(app)
+#app.config['SQLALCHEMY_DB_URI'] = 'mysql+pymysql://localhost/mmi'
+#db = SQLAlchemy(app)
+
+db = dict()
+sos = list()
+
+@app.route("/live", methods=['POST'])
+def handleLiveLocation():
+    print(request.form)
+    db[str(request.form['id'])] = [request.form['x'], request.form['y']]
+    return "Ok"
+
+@app.route("/all")
+def getAllData():
+    return jsonify(db)
+
+@app.route("/sos", methods=['POST'])
+def registerDistress():
+    sos.append(request.form['id'])
+    return "Help underway"
+
+@app.route('/sendNotification')
+def notify():
+   return jsonify({
+       "sos": sos
+   }) 
